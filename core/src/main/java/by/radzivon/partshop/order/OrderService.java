@@ -1,10 +1,7 @@
 package by.radzivon.partshop.order;
 
-import by.shop.part.Part;
-
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public interface OrderService {

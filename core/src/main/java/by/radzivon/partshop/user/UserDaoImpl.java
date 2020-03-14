@@ -26,14 +26,15 @@ public class UserDaoImpl implements UserDao {
 
     @Transactional
     @Override
-    public void save(User user) {
+    public User save(User user) {
         sessionFactory.getCurrentSession().saveOrUpdate(user);
         log.info("Singer saved with id: " + user.getId());
+
         return user;
     }
 
     @Override
-    public ResultSet getUserByLogin(String name) {
+    public User getUserByLogin(String name) {
         return null;
     }
 

@@ -1,6 +1,6 @@
 package by.radzivon.partshop.order;
 
-import by.shop.part.Part;
+import by.radzivon.partshop.part.Part;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
