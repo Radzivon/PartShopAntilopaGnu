@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Add Order</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather|PT+Sans+Caption:400,700" rel="stylesheet">
+</head>
+
+<body>
+<div class="topmenu" id="list">
+    <ul>
+        <a th:href="@{/index}">
+            Antilopa GNU
+        </a>
+    </ul>
+</div>
+<h1>Create a Order:</h1>
+<form th:action="@{/newOrder}"
+      th:object="${orderDto}" method="POST">
+
+    <div th:if="${#fields.hasErrors()}">
+     <span class="validationError">
+     Please correct the information.
+     </span>
+    </div>
+    Name:
+    <input type="text" th:field="*{name}"/>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('name')}"
+          th:errors="*{name}">
+    </span>
+    <br/>
+    Date Of Completion
+    <input type="date" th:field="*{dateOfCompletion}"/>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('dateOfCompletion')}"
+          th:errors="*{dateOfCompletion}">
+    </span>
+    <br/>
+    List parts:
+
+    Delivery date
+    <input type="date" th:field="*{deliveryDate}"/>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('deliveryDate')}"
+          th:errors="*{deliveryDate}">
+    </span>
+    Note
+    <input type="text" th:field="*{note}"/>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('note')}"
+          th:errors="*{note}">
+    </span>
+    <br/>
+    <input type="submit" value="Create"/>
+</form>
+<br/>
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <div class="footer__name">
+                    AntilopaGnu©<br><i class="fas fa-envelope-open"></i>
+                    <a class="footer__link" href="mailto:partshop123@mail.ru">partshop123@mail.com</a>
+                </div>
+            </div>
+            <div class="col-4">
+                <p class="footer__social">Social Networks:</p>
+                <p class="footer__social-icons">
+                    <a href="https://vk.com/vlad_radion" target="_blank">
+                        <i class="fab fa-vk" aria-hidden="true"></i>
+                    </a>
+                </p>
+            </div>
+            <div class="col-4">
+                <p class="footer__social">Links:</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

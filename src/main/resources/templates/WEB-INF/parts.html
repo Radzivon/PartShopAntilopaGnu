@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Person List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather|PT+Sans+Caption:400,700" rel="stylesheet">
+</head>
+
+<body>
+<div class="topmenu" id="list">
+    <ul>
+        <a th:href="@{/index}">
+            Antilopa GNU
+        </a>
+    </ul>
+</div>
+<h1>Part List</h1>
+<a href="addPart">ADD PART</a>
+<br/><br/>
+<div>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Category</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Realise Date</th>
+            <th>Condition</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+
+        <tr th:each="part : ${parts}">
+            <a th:href="@{'/part/'+${part.id}}">
+                <td th:utext="${part.id}">...</td>
+            </a>
+            <td th:utext="${part.category}">...</td>
+            <td th:utext="${part.brand}">...</td>
+            <td th:utext="${part.model}">...</td>
+            <td th:utext="${part.price}">...</td>
+            <td th:utext="${part.stock}">...</td>
+            <td th:utext="${part.realiseDate}">...</td>
+            <td th:utext="${part.condition}">...</td>
+            <td th:utext="${part.description}">...</td>
+            <td>
+                <a th:href="@{'/editPart/'+${part.id}}">Edit</a>
+                <a th:href="@{'/deletePart/'+${part.id}}">Delete</a>
+
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <div class="footer__name">
+                    AntilopaGnu©<br><i class="fas fa-envelope-open"></i>
+                    <a class="footer__link" href="mailto:partshop123@mail.ru">partshop123@mail.com</a>
+                </div>
+            </div>
+            <div class="col-4">
+                <p class="footer__social">Social Networks:</p>
+                <p class="footer__social-icons">
+                    <a href="https://vk.com/vlad_radion" target="_blank">
+                        <i class="fab fa-vk" aria-hidden="true"></i>
+                    </a>
+                </p>
+            </div>
+            <div class="col-4">
+                <p class="footer__social">Links:</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
