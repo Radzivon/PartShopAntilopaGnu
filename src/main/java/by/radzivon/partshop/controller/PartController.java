@@ -2,15 +2,11 @@ package by.radzivon.partshop.controller;
 
 import by.radzivon.partshop.dto.PartDto;
 import by.radzivon.partshop.entity.Part;
-import by.radzivon.partshop.entity.Stock;
 import by.radzivon.partshop.entity.enums.PartCondition;
 import by.radzivon.partshop.exceptions.NoSuchEntityException;
-import by.radzivon.partshop.services.part.PartService;
-import by.radzivon.partshop.services.part.PartServiceImpl;
-import lombok.Setter;
+import by.radzivon.partshop.service.part.PartService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 @RestController
+@RequestMapping("/parts")
 @Slf4j
 public class PartController {
 
@@ -39,12 +35,8 @@ public class PartController {
     }
 
     @GetMapping(value = {"/parts"})
-    public ModelAndView partsPage() throws NoSuchEntityException {
-        List<Part> parts = partService.getAll();
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("parts");
-        modelAndView.addObject("parts", parts);
-        return modelAndView;
+    public @ResponseBody List<Part> partsPage() throws NoSuchEntityException {
+        return partService.getAll();
     }
 
     @GetMapping(value = {"/addPart"})
@@ -52,7 +44,6 @@ public class PartController {
         ModelAndView modelAndView = new ModelAndView("addPart");
         PartDto personForm = new PartDto();
         modelAndView.addObject("partForm", personForm);
-        modelAndView.addObject("partCondition", listPartCondition());
         log.info("/addPart - GET  was called");
         return modelAndView;
     }
@@ -121,18 +112,10 @@ public class PartController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/deletePart/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public ModelAndView deletePerson(@PathVariable("id") Long id) throws NoSuchEntityException {
         Part part = partService.getById(id).orElseThrow(() -> new NoSuchEntityException("Part not found"));
         partService.deletePart(part);
         log.info("deletePerson with id " + id);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/parts");
-        return modelAndView;
-    }
-
-
-    public List<PartCondition> listPartCondition() {
-        return Arrays.asList(PartCondition.values());
     }
 }

@@ -1,4 +1,4 @@
-package by.radzivon.partshop.services.part;
+package by.radzivon.partshop.service.part;
 
 import by.radzivon.partshop.entity.Part;
 import by.radzivon.partshop.repository.PartRepository;

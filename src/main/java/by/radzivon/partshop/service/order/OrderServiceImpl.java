@@ -1,4 +1,4 @@
-package by.radzivon.partshop.services.order;
+package by.radzivon.partshop.service.order;
 
 import by.radzivon.partshop.entity.Order;
 import by.radzivon.partshop.entity.PairPartQuantity;

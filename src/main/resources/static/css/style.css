@@ -31,7 +31,7 @@ html {
     padding: 0;
 }
 
-.topmenu a {
+.topmenu ul a {
     text-decoration: none;
     color: #FFFFFF;
 }

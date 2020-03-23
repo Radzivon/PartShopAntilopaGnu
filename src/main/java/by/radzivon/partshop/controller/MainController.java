@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class MainController {
-    @GetMapping(value = {"/", "/index"})
+    @GetMapping(value = {"/", "index"})
     public ModelAndView partsPage() throws NoSuchEntityException {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");

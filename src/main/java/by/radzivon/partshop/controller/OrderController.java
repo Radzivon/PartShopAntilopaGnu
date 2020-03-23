@@ -3,18 +3,21 @@ package by.radzivon.partshop.controller;
 import by.radzivon.partshop.dto.OrderDto;
 import by.radzivon.partshop.entity.Order;
 import by.radzivon.partshop.entity.PairPartQuantity;
+import by.radzivon.partshop.entity.User;
 import by.radzivon.partshop.exceptions.NoSuchEntityException;
-import by.radzivon.partshop.services.order.OrderService;
+import by.radzivon.partshop.service.order.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -62,7 +65,9 @@ public class OrderController {
     @PostMapping(value = {"/newOrder"})
     public ModelAndView saveOrder(Model model,
                                   @Valid @ModelAttribute("orderDto") OrderDto orderDto,
-                                  Errors errors) {
+                                  Errors errors,
+                                  SessionStatus sessionStatus,
+                                  @AuthenticationPrincipal User user) {
         ModelAndView modelAndView = new ModelAndView();
         log.info("/newOrder - POST  was called" + orderDto);
         if (errors.hasErrors()) {
@@ -77,8 +82,8 @@ public class OrderController {
             Date deliveryDate = orderDto.getDeliveryDate();
             String note = orderDto.getNote();
 
-
             Order order = orderService.createOrder(name, partQuantityList, deliveryDate, dateOfCompletion, note);
+            order.setUser(user);
 
             modelAndView.setViewName("confirmOrder");
             modelAndView.addObject("order", order);
@@ -110,10 +115,13 @@ public class OrderController {
 
     @PostMapping(value = "/confirmOrder")
     public ModelAndView confirmOrder(@ModelAttribute("order") Order order,
-                                     Errors errors) {
+                                     Errors errors,
+                                     SessionStatus sessionStatus,
+                                     @AuthenticationPrincipal User user) {
         log.info("/confirmOrder - POST  was called" + order);
+        order.setUser(user);
         orderService.save(order);
-
+        sessionStatus.setComplete();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.getModel();
         modelAndView.setViewName("redirect:/orders");

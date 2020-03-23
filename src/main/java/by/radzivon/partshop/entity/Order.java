@@ -29,7 +29,7 @@ public class Order implements Serializable {
     private Date orderTime;
     private Date deliveryDate;
     private BigDecimal totalCost;
-    @OneToOne
+    @ManyToOne
     private User user;
     @Enumerated(EnumType.STRING)
     private OrderCondition condition;

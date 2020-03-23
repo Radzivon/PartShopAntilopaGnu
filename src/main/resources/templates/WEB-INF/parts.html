@@ -1,15 +1,21 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:insert="fragment/head::head(AntilopaGnu)">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link type="text/css" rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}" />
+    <link type="text/css" rel="stylesheet" th:href="@{https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css}" />
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script th:src="@{/js/parttable.js}"></script>
 </head>
 <body>
 <div th:insert="fragment/menu :: topmenu">
 </div>
 <h1>Part List</h1>
-<a href="addPart">ADD PART</a>
+<a th:href="@{/addPart}">ADD PART</a>
 <br/><br/>
 <div>
-    <table border="1">
+    <table id="partTable" class="display">
         <tr>
             <th>ID</th>
             <th>Category</th>
@@ -23,25 +29,10 @@
             <th>Action</th>
         </tr>
 
-        <tr th:each="part : ${parts}">
-            <td><a th:href="@{'/part/'+${part.id}}" th:utext="${part.id}"></a></td>
-            <td th:utext="${part.category}">...</td>
-            <td th:utext="${part.brand}">...</td>
-            <td th:utext="${part.model}">...</td>
-            <td th:utext="${part.price}">...</td>
-            <td th:utext="${part.stock}">...</td>
-            <td th:utext="${part.realiseDate}">...</td>
-            <td th:utext="${part.condition}">...</td>
-            <td th:utext="${part.description}">...</td>
-            <td>
-                <a th:href="@{'/editPart/'+${part.id}}">Edit</a>
-                <a th:href="@{'/deletePart/'+${part.id}}">Delete</a>
-
-            </td>
-        </tr>
     </table>
 </div>
 <div th:insert="fragment/footer :: footer">
 </div>
+
 </body>
 </html>

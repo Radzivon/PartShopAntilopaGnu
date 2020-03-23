@@ -1,4 +1,4 @@
-package by.radzivon.partshop.services.photo;
+package by.radzivon.partshop.service.photo;
 
 import by.radzivon.partshop.entity.Photo;
 
