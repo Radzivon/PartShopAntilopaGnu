@@ -5,6 +5,7 @@ import by.radzivon.partshop.entity.Part;
 import by.radzivon.partshop.entity.Stock;
 import by.radzivon.partshop.entity.enums.PartCondition;
 import by.radzivon.partshop.exceptions.NoSuchEntityException;
+import by.radzivon.partshop.services.part.PartService;
 import by.radzivon.partshop.services.part.PartServiceImpl;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -21,24 +22,23 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-@Controller
-@RequestMapping
-@Setter
+@RestController
 @Slf4j
 public class PartController {
-    @Autowired
-    private PartServiceImpl partService;
 
-    @GetMapping(value = "/part/{id}")
-    public ModelAndView partPage(@PathVariable("id") Long id) throws NoSuchEntityException {
-        Part part = partService.getById(id).orElseThrow(() -> new NoSuchEntityException("Part not found"));
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("part");
-        modelAndView.addObject("part", part);
-        return modelAndView;
+    private PartService partService;
+
+    @Autowired
+    public void setPartService(PartService partService) {
+        this.partService = partService;
     }
 
-    @GetMapping(value = { "/parts"})
+    @GetMapping(value = "/part/{id}")
+    public Part partPage(@PathVariable("id") Long id) throws NoSuchEntityException {
+        return partService.getById(id).orElseThrow(() -> new NoSuchEntityException("Part not found"));
+    }
+
+    @GetMapping(value = {"/parts"})
     public ModelAndView partsPage() throws NoSuchEntityException {
         List<Part> parts = partService.getAll();
         ModelAndView modelAndView = new ModelAndView();

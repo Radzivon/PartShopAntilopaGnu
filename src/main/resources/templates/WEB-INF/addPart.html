@@ -1,24 +1,19 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Add Part</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<head th:insert="fragment/head::head(AntilopaGnu)">
 </head>
 <body>
+<div th:insert="fragment/menu :: topmenu">
+</div>
 <h1>Create a Part:</h1>
 <form th:action="@{/addPart}"
       th:object="${partForm}" method="POST">
 
-        <div th:if="${#fields.hasErrors()}">
+    <div th:if="${#fields.hasErrors()}">
      <span class="validationError">
      Please correct the information.
      </span>
-        </div>
+    </div>
     Category:
     <input type="text" th:field="*{category}"/>
     <span class="validationError"
@@ -84,28 +79,7 @@
     <input type="submit" value="Create"/>
 </form>
 <br/>
-<div class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-4">
-                <div class="footer__name">
-                    AntilopaGnu©<br><i class="fas fa-envelope-open"></i>
-                    <a class="footer__link" href="mailto:partshop123@mail.ru">partshop123@mail.com</a>
-                </div>
-            </div>
-            <div class="col-4">
-                <p class="footer__social">Social Networks:</p>
-                <p class="footer__social-icons">
-                    <a href="https://vk.com/vlad_radion" target="_blank">
-                        <i class="fab fa-vk" aria-hidden="true"></i>
-                    </a>
-                </p>
-            </div>
-            <div class="col-4">
-                <p class="footer__social">Links:</p>
-            </div>
-        </div>
-    </div>
+<div th:insert="fragment/footer :: footer">
 </div>
 </body>
 </html>

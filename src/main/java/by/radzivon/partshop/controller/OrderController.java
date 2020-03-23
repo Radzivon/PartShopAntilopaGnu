@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -58,7 +55,6 @@ public class OrderController {
         ModelAndView modelAndView = new ModelAndView("newOrder");
         OrderDto orderDto = new OrderDto();
         modelAndView.addObject("orderDto", orderDto);
-        //modelAndView.addObject("partCondition", listPartCondition());
         log.info("/newOrder - GET  was called");
         return modelAndView;
     }
@@ -83,8 +79,9 @@ public class OrderController {
 
 
             Order order = orderService.createOrder(name, partQuantityList, deliveryDate, dateOfCompletion, note);
-            modelAndView.addObject("order", order);
+
             modelAndView.setViewName("confirmOrder");
+            modelAndView.addObject("order", order);
 
             log.info("/newOrder - POST  was called");
             return modelAndView;
