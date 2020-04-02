@@ -1,15 +1,14 @@
 package by.radzivon.partshop.service.photo;
 
 import by.radzivon.partshop.entity.Photo;
+import by.radzivon.partshop.exception.ResourceNotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface PhotoService {
-    Optional<Photo> getPhotoById(Long id);
-    List<Photo> getPhotosForPart(Long partId);
+    Photo getById(Long id) throws ResourceNotFoundException;
     void save(Photo photo);
-    void savePhotos(List<Photo> photos);
-    void update(Long id, String comment);
-    List<Photo> findAll();
+    void update(Photo photo);
+    List<Photo> getAll();
+    void delete(Photo photo);
 }

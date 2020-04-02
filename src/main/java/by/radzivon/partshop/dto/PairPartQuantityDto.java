@@ -5,9 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CommentDto {
+public class PairPartQuantityDto {
     private long id;
-    private String text;
-
-    private long photoId;
+    private int quantity;
+    private long partId;
+    private long orderId;
 }

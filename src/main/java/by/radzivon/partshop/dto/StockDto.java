@@ -5,9 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CommentDto {
+public class StockDto {
     private long id;
-    private String text;
-
-    private long photoId;
+    private int stock;
+    private long partId;
 }

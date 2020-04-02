@@ -3,11 +3,13 @@ package by.radzivon.partshop.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
-public class CommentDto {
+public class BrandDto {
     private long id;
-    private String text;
+    private String name;
 
-    private long photoId;
+    private Set<PartDto> parts;
 }

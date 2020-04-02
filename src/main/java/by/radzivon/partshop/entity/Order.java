@@ -2,38 +2,45 @@ package by.radzivon.partshop.entity;
 
 import by.radzivon.partshop.entity.enums.DeliveryCondition;
 import by.radzivon.partshop.entity.enums.OrderCondition;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
-@Data
+@Entity
+@Table(name = "orders")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-@Entity
-@Table(name = "orders")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "order_id")
     private Long id;
     private String name;
-    @OneToMany
-    private List<PairPartQuantity> parts;
     private Date orderTime;
     private Date deliveryDate;
     private BigDecimal totalCost;
-    @ManyToOne
-    private User user;
     @Enumerated(EnumType.STRING)
     private OrderCondition condition;
+    private DeliveryCondition deliveryCondition;
     private Date dateOfCompletion;
     private String note;
-    private DeliveryCondition deliveryCondition;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "order")
+    private Set<PairPartQuantity> parts;
 }

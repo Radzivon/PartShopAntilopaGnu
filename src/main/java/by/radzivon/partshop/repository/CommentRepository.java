@@ -1,13 +1,9 @@
 package by.radzivon.partshop.repository;
 
-import by.radzivon.partshop.entity.Photo;
+import by.radzivon.partshop.entity.Comment;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface PhotoRepository extends CrudRepository<Photo, Long> {
-
-    List<Photo> findAll();
+public interface CommentRepository extends CrudRepository<Comment, Long> {
 }

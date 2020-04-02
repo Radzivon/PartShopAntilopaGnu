@@ -1,32 +1,28 @@
 package by.radzivon.partshop.service.part;
 
 import by.radzivon.partshop.entity.Part;
+import by.radzivon.partshop.exception.ResourceNotFoundException;
 import by.radzivon.partshop.repository.PartRepository;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-@Setter
+@Transactional
 public class PartServiceImpl implements PartService {
-    @Autowired
+
     private PartRepository partRepository;
 
-    @Override
-    public Optional<Part> getById(Long id) {
-        return partRepository.findById(id);
+    @Autowired
+    public PartServiceImpl(PartRepository partRepository) {
+        this.partRepository = partRepository;
     }
 
-    //    @Override
-//    public Optional<Part> findByBrandAndModel(String brand, String model) {
-//        return partRepository.findBrandAndModel(brand, model);
-//    }
     @Override
-    public Optional<Part> getByCategory(String category) {
-        return partRepository.findByCategory(category);
+    public Part getById(Long id) throws ResourceNotFoundException {
+        return partRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Part don't exist with id " + id));
     }
 
     @Override
@@ -42,5 +38,10 @@ public class PartServiceImpl implements PartService {
     @Override
     public void deletePart(Part part) {
         partRepository.delete(part);
+    }
+
+    @Override
+    public void editPart(Part part) {
+        partRepository.save(part);
     }
 }

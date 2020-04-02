@@ -1,34 +1,38 @@
 package by.radzivon.partshop.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-@Data
+
+@Entity
+@Table(name = "photo")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-@Entity
-@Table(name = "photo")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Photo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "photo_id")
     private Long id;
-    @Column
     private String imageUrl;
-    @OneToMany
-    @MapsId
-    private List<Comment> comments;
-    @Column
-    private LocalDate dateOfDownload;
+    private Date dateOfDownload;
+
+    @OneToMany(mappedBy = "photo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Comment> comments;
+
     @ManyToOne
-    @MapsId
+    @JoinColumn(name = "part_id")
     private Part part;
 }

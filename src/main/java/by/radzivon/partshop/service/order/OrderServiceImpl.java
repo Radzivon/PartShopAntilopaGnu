@@ -1,45 +1,29 @@
 package by.radzivon.partshop.service.order;
 
 import by.radzivon.partshop.entity.Order;
-import by.radzivon.partshop.entity.PairPartQuantity;
-import by.radzivon.partshop.entity.enums.DeliveryCondition;
 import by.radzivon.partshop.entity.enums.OrderCondition;
+import by.radzivon.partshop.exception.ResourceNotFoundException;
 import by.radzivon.partshop.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@Transactional
 public class OrderServiceImpl implements OrderService {
-    @Autowired
+
     private OrderRepository orderRepository;
 
-    @Override
-    public Order createOrder(String name, List<PairPartQuantity> pairPartQuantities, Date deliveryDate, Date dateOfCompletion, String note) {
-        Date orderTime = new Date();
-        BigDecimal totalCost = calculateTotalCost(pairPartQuantities);
-        Order order = Order.builder()
-                .name(name)
-                .parts(pairPartQuantities)
-                .orderTime(orderTime)
-                .deliveryDate(deliveryDate)
-                .totalCost(totalCost)
-                .condition(OrderCondition.ADOPTED)
-                .dateOfCompletion(dateOfCompletion)
-                .note(note)
-                .deliveryCondition(DeliveryCondition.ON_THE_WAY)
-                .build();
-
-        return order;
+    @Autowired
+    public OrderServiceImpl(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
     }
 
     @Override
-    public Optional<Order> getById(Long id) {
-        return orderRepository.findById(id);
+    public Order getById(Long id) throws ResourceNotFoundException {
+        return orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order with id " + id + " exist"));
     }
 
     @Override
@@ -66,15 +50,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void deleteOrder(Order order) {
-        orderRepository.delete(order);
+    public void editOrder(Order order) {
+        orderRepository.save(order);
     }
 
-    private BigDecimal calculateTotalCost(List<PairPartQuantity> parts) {
-        BigDecimal totalCost = new BigDecimal(0);
-        for (PairPartQuantity pairPartQuantity : parts) {
-            totalCost = pairPartQuantity.getPart().getPrice().multiply(BigDecimal.valueOf(pairPartQuantity.getQuantity()));
-        }
-        return totalCost;
+    @Override
+    public void deleteOrder(Order order) {
+        orderRepository.delete(order);
     }
 }

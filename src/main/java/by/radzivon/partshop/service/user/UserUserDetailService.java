@@ -14,11 +14,11 @@ import java.util.Optional;
 
 @Service("userDetailsService")
 @Slf4j
-public class UserRepositoryUserDetailService implements UserDetailsService {
+public class UserUserDetailService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Autowired
-    public UserRepositoryUserDetailService(UserRepository userRepository) {
+    public UserUserDetailService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
