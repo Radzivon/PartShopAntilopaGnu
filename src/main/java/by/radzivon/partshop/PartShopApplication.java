@@ -1,26 +1,11 @@
 package by.radzivon.partshop;
 
-import by.radzivon.partshop.entity.*;
-import by.radzivon.partshop.entity.enums.PartCondition;
-import by.radzivon.partshop.repository.CommentRepository;
-import by.radzivon.partshop.repository.PartRepository;
-import by.radzivon.partshop.repository.PhotoRepository;
-import by.radzivon.partshop.repository.StockRepository;
-import by.radzivon.partshop.security.SecurityConfig;
-import by.radzivon.partshop.util.Mapper;
-import org.modelmapper.ModelMapper;
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.Set;
-import java.util.stream.Stream;
 
 @SpringBootApplication
 public class PartShopApplication {
@@ -41,7 +26,7 @@ public class PartShopApplication {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(new Class[]{PartShopApplication.class, SecurityConfig.class}, args);
+        SpringApplication.run(PartShopApplication.class, args);
     }
 
 //    @Bean
