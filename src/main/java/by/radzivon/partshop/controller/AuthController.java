@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:4200")
 @Slf4j
 public class AuthController {
     private AuthService authService;
@@ -25,13 +26,13 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginForm loginForm) {
-        log.info("/user/signin by user" + loginForm.getUsername());
+        log.info("/user/signin " + loginForm.getUsername());
         return authService.signIn(loginForm);
     }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpForm signUpForm) throws ResourceNotFoundException {
-        log.info("/signup by username " + signUpForm.getUsername());
+        log.info("/signup  " + signUpForm.getUsername());
         return authService.signUp(signUpForm);
     }
 }

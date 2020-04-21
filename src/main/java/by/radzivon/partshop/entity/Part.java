@@ -2,7 +2,6 @@ package by.radzivon.partshop.entity;
 
 import by.radzivon.partshop.entity.enums.PartCondition;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
@@ -35,9 +34,6 @@ public class Part implements Serializable {
     @Enumerated(EnumType.STRING)
     private PartCondition condition;
     private String description;
-
-    @OneToMany(mappedBy = "part", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<PairPartQuantity> pairPartQuantityList;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "part", cascade = CascadeType.ALL)
     private Stock stock;

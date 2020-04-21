@@ -1,5 +1,6 @@
 package by.radzivon.partshop.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,4 @@ import java.util.Set;
 public class BrandDto {
     private long id;
     private String name;
-
-    private Set<PartDto> parts;
 }

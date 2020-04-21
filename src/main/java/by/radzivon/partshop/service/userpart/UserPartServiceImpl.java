@@ -1,11 +1,9 @@
-package by.radzivon.partshop.service.part;
+package by.radzivon.partshop.service.userpart;
 
-import by.radzivon.partshop.entity.Part;
+import by.radzivon.partshop.entity.UserPart;
 import by.radzivon.partshop.exception.ResourceNotFoundException;
-import by.radzivon.partshop.repository.PartRepository;
+import by.radzivon.partshop.repository.UserPartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,37 +11,36 @@ import java.util.List;
 
 @Service
 @Transactional
-public class PartServiceImpl implements PartService {
-
-    private PartRepository partRepository;
+public class UserPartServiceImpl implements UserPartService {
+    private UserPartRepository partRepository;
 
     @Autowired
-    public PartServiceImpl(PartRepository partRepository) {
+    public UserPartServiceImpl(UserPartRepository partRepository) {
         this.partRepository = partRepository;
     }
 
     @Override
-    public Part getById(Long id) throws ResourceNotFoundException {
+    public UserPart getById(Long id) throws ResourceNotFoundException {
         return partRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Part don't exist with id " + id));
     }
 
     @Override
-    public void save(Part part) {
+    public void save(UserPart part) {
         partRepository.save(part);
     }
 
     @Override
-    public Page<Part> getAll(Pageable pageable) {
-        return partRepository.findAll(pageable);
+    public List<UserPart> getAll() {
+        return partRepository.findAll();
     }
 
     @Override
-    public void deletePart(Part part) {
+    public void deletePart(UserPart part) {
         partRepository.delete(part);
     }
 
     @Override
-    public void editPart(Part part) {
+    public void editPart(UserPart part) {
         partRepository.save(part);
     }
 }

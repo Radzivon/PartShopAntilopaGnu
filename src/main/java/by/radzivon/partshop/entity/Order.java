@@ -42,5 +42,5 @@ public class Order implements Serializable {
     private User user;
 
     @OneToMany(mappedBy = "order")
-    private Set<PairPartQuantity> parts;
+    private Set<UserPart> parts;
 }

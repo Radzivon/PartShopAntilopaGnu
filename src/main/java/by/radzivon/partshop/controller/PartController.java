@@ -6,7 +6,13 @@ import by.radzivon.partshop.exception.ResourceNotFoundException;
 import by.radzivon.partshop.service.part.PartService;
 import by.radzivon.partshop.util.Mapper;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.Converter;
+import org.modelmapper.spi.MappingContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +24,6 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @Slf4j
 public class PartController {
-
     private PartService partService;
 
     @Autowired
@@ -32,9 +37,12 @@ public class PartController {
     }
 
     @GetMapping(value = {"/all"})
-    public @ResponseBody
-    List<PartDto> partsPage() {
-        return Mapper.mapAll(partService.getAll(), PartDto.class);
+    public Page<PartDto> partsPage(@RequestParam(defaultValue = "0") int pageNo,
+                                   @RequestParam(defaultValue = "20") int pageSize,
+                                   @RequestParam(defaultValue = "id") String sortBy,
+                                   @RequestParam(defaultValue = "asc") String sortDir) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.Direction.fromString(sortDir), sortBy);
+        return partService.getAll(paging).map(this::convertToDto);
     }
 
     @PostMapping(value = {"/add"})
@@ -56,5 +64,9 @@ public class PartController {
         Part part = partService.getById(id);
         partService.deletePart(part);
         log.info("part/delete with id " + id);
+    }
+
+    private PartDto convertToDto(Part part) {
+        return Mapper.map(part, PartDto.class);
     }
 }

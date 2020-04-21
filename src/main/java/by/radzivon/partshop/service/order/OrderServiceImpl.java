@@ -5,6 +5,8 @@ import by.radzivon.partshop.entity.enums.OrderCondition;
 import by.radzivon.partshop.exception.ResourceNotFoundException;
 import by.radzivon.partshop.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,8 +47,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getAll() {
-        return orderRepository.findAll();
+    public Page<Order> getAll(Pageable pageable) {
+        return orderRepository.findAll(pageable);
     }
 
     @Override

@@ -35,4 +35,9 @@ public class Photo implements Serializable {
     @ManyToOne
     @JoinColumn(name = "part_id")
     private Part part;
+    @ManyToOne
+    @JoinColumn(name = "user_part_id")
+    private UserPart userPart;
+
+
 }

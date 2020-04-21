@@ -1,6 +1,7 @@
 package by.radzivon.partshop.dto;
 
 import by.radzivon.partshop.entity.enums.PartCondition;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,8 @@ public class PartDto {
     private Date realiseDate;
     private PartCondition condition;
     private String description;
-    private Set<PairPartQuantityDto> pairPartQuantityList;
+    @JsonIgnore
+    private Set<UserPartDto> pairPartQuantityList;
     private long stockId;
     private Set<PhotoDto> photos;
     private long brandId;

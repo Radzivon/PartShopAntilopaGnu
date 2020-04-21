@@ -1,12 +1,9 @@
 package by.radzivon.partshop.service.order;
 
 import by.radzivon.partshop.entity.Order;
-import by.radzivon.partshop.entity.PairPartQuantity;
 import by.radzivon.partshop.exception.ResourceNotFoundException;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface OrderService {
     Order getById(Long id) throws ResourceNotFoundException;
@@ -14,6 +11,6 @@ public interface OrderService {
     void annul(Order order);
     void issue(Order order);
     void deleteOrder(Order order);
-    List<Order> getAll();
+    Page<Order> getAll(Pageable pageable);
     void editOrder(Order order);
 }
